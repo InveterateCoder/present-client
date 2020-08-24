@@ -60,14 +60,13 @@ export const Book = connect(mapStateToProps)(
       if (date) date = new Date(date)
       let letters = props.letters.filter(l => {
         const letDate = new Date(l.datetime)
-        if ((!date || (date.getFullYear() === letDate.getFullYear()
-          && date.getMonth() === letDate.getMonth()
-          && date.getDate() === letDate.getDate()))
+        if ((!date || letDate > date)
           && (!search || test(l.text, search))) {
           return true
         }
         return false
       })
+      if (date) letters = letters.reverse()
       const total = Math.ceil(letters.length / LETTERS_PER_PAGE) || 1
       if (page > total || page < 1)
         return null
