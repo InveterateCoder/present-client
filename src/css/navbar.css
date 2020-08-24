@@ -1,0 +1,12 @@
+.navbar {
+    box-shadow: 0 3px 5px 1px black;
+    border-top: 1px inset black !important;
+}
+#dpicker {
+    display: inline;
+    position: absolute;
+    right: 15px;
+    margin-left: 15px;
+    box-shadow: 0 0 10px 2px var(--dark);
+    border-radius: 0.30rem;
+}

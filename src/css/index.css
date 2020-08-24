@@ -1,0 +1,45 @@
+:root {
+    --bg: mediumpurple;
+    --jumbotron-bg-image : url(../img/purple_roses.jpg);
+}
+body {
+    box-sizing: border-box;
+    background-color: var(--bg);
+    background-image: url(../img/gf.png);
+    background-attachment: fixed;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding-bottom: 30px;
+}
+@media screen and (min-width: 576px){
+    .jumbotron > div:first-child {
+        font-size: 3rem;
+    }
+    .letter-content {
+        max-width: 90%;
+    }
+}
+@media screen and (min-width: 768px){
+    .jumbotron > div:first-child {
+        font-size: 4rem;
+    }
+    .letter-content {
+        max-width: 85%;
+    }
+}
+@media screen and (min-width: 992px){
+    .jumbotron > div:first-child {
+        font-size: 4.7rem;
+    }
+    .letter-content {
+        max-width: 80%;
+    }
+}
+@media screen and (min-width: 1200px){
+    .jumbotron > div:first-child {
+        font-size: 5.5rem;
+    }
+    .letter-content {
+        max-width: 70%;
+    }
+}

@@ -1,0 +1,42 @@
+.letter {
+    background-image: url(../img/heart.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-top: 30px;
+    border-radius: 30px;
+    box-shadow: 0 0 15px 3px black;
+}
+.letter-content {
+    margin: auto;
+    max-width: 95%;
+    border-radius: 30px;
+    border: 2px solid black;
+}
+.letter-content > div:first-child {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+.letter-content > div:first-child > div > span {
+    vertical-align: middle;
+}
+.letter-content .name {
+    text-decoration: underline;
+}
+.letter-content .date {
+    font-family: 'Courier New', Courier, monospace;
+}
+.letter-content .text {
+    font-size: 1.1rem;
+    text-align: center;
+    overflow-wrap: break-word;
+}
+.letter-content .text > p {
+  margin: 0;
+}
+.RichTextEditor__paragraph___3NTf9 {
+  margin: 0 !important;
+}
