@@ -23,20 +23,42 @@
 .letter-content > div:first-child > div > span {
     vertical-align: middle;
 }
-.letter-content .name {
-    text-decoration: underline;
-}
 .letter-content .date {
     font-family: 'Courier New', Courier, monospace;
 }
 .letter-content .text {
-    font-size: 1.1rem;
-    text-align: center;
     overflow-wrap: break-word;
 }
 .letter-content .text > p {
   margin: 0;
 }
-.RichTextEditor__paragraph___3NTf9 {
-  margin: 0 !important;
+.text .ql-align-center {
+  text-align: center;
+}
+.text .ql-align-right {
+  text-align: right;
+}
+.text .ql-align-justify {
+  text-align: justify;
+}
+.text .ql-indent-1 {
+  text-indent: 20px;
+}
+.text blockquote {
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+  quotes: "\201C""\201D""\2018""\2019";
+}
+.text blockquote:before {
+  color: #ccc;
+  content: open-quote;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
+}
+.text blockquote p {
+  display: inline;
 }

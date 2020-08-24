@@ -2,22 +2,26 @@ import React, { useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { createLetter, updateLetter, deleteLetter } from './store/storeActions'
-import RichTextEditor from 'react-rte'
+import ReactQuill from 'react-quill'
+import 'react-quill/dist/quill.snow.css'
 
-const toolbarConfig = {
-  display: ['INLINE_STYLE_BUTTONS', 'BLOCK_TYPE_DROPDOWN', 'HISTORY_BUTTONS'],
-  INLINE_STYLE_BUTTONS: [
-    { label: 'Bold', style: 'BOLD' },
-    { label: 'Italic', style: 'ITALIC' },
-    { label: 'Underline', style: 'UNDERLINE' }
+const modules = {
+  toolbar: [
+    [{ 'header': [1, 2, false] }],
+    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+    [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '+1' }],
+    [{ 'align': '' }, { align: 'center' }, { 'align': 'right' }, { 'align': 'justify' }],
+    ['link'],
+    ['clean']
   ],
-  BLOCK_TYPE_DROPDOWN: [
-    { label: 'Normal', style: 'unstyled' },
-    { label: 'Header Large', style: 'header-one' },
-    { label: 'Header Medium', style: 'header-two' },
-    { label: 'Header Small', style: 'header-three' }
-  ]
 }
+
+const formats = [
+  'header',
+  'bold', 'italic', 'underline', 'strike', 'blockquote',
+  'list', 'bullet', 'indent',
+  'link', 'align',
+]
 
 const mapDispatchToProps = { createLetter, updateLetter, deleteLetter }
 
@@ -25,7 +29,7 @@ export const MyEditor = connect(null, mapDispatchToProps)(
   function (props) {
     const [name, setName] = useState(props.name || 'Setareh')
     const [datetime, setDatetime] = useState(getLocalTimeFormat(props.datetime || new Date().toISOString()))
-    const [text, setText] = useState(RichTextEditor.createValueFromString(props.text || '', 'html'))
+    const [text, setText] = useState(props.text || '')
 
     function getLocalTimeFormat(datetime) {
       function ten(n) {
@@ -54,7 +58,7 @@ export const MyEditor = connect(null, mapDispatchToProps)(
         date = new Date()
       }
       const letter = {
-        name, datetime: date.toISOString(), text: text.toString('html')
+        name, datetime: date.toISOString(), text: text
       }
       const parser = new DOMParser()
       const doc = parser.parseFromString(letter.text, "text/html")
@@ -72,7 +76,7 @@ export const MyEditor = connect(null, mapDispatchToProps)(
     const hide = () => {
       setName(props.name || 'Setareh')
       setDatetime(getLocalTimeFormat(props.datetime || new Date().toISOString()))
-      setText(RichTextEditor.createValueFromString(props.text || '', 'html'))
+      setText(props.text || '')
       props.closeShow()
     }
 
@@ -98,9 +102,12 @@ export const MyEditor = connect(null, mapDispatchToProps)(
             </div>
           }
           <div className="form-group">
-            <RichTextEditor toolbarConfig={toolbarConfig}
+            <ReactQuill
               value={text}
-              onChange={value => setText(value)} />
+              onChange={(val) => setText(val)}
+              modules={modules}
+              formats={formats}
+            />
           </div>
         </Modal.Body>
         <Modal.Footer>

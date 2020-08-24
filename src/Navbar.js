@@ -112,7 +112,7 @@ export class Navbar extends Component {
           <i className="fa fa-plus" />
         </button>
       </div>
-      <MyEditor key="new" show={this.state.show} closeShow={this.closeShow} />
+      <MyEditor show={this.state.show} closeShow={this.closeShow} />
     </nav>
   }
   processQueryProps() {

@@ -6,26 +6,43 @@ import escapeRegex from 'escape-string-regexp'
 
 const domParser = new DOMParser()
 
-function test(text, search) {
-  const testPat = RegExp(escapeRegex(search), 'i')
+function find(text, search, replace) {
   const doc = domParser.parseFromString(text, 'text/html')
+  const testPat = RegExp(escapeRegex(search), 'i')
+  const replacePat = replace ? RegExp(escapeRegex(search), 'gi') : null
   for (let node of doc.body.childNodes) {
-    if (testPat.test(node.textContent)) {
-      return true
+    if (node.nodeName === 'UL' || node.nodeName === 'OL') {
+      for (let li of node.childNodes) {
+        if (testPat.test(li.textContent)) {
+          if (replace) {
+            li.innerHTML = li.textContent.replace(replacePat, '<span class="bg-warning">$&</span>')
+          } else {
+            return true
+          }
+        }
+      }
+    } else {
+      if (testPat.test(node.textContent)) {
+        if (replace) {
+          node.innerHTML = node.textContent.replace(replacePat, '<span class="bg-warning">$&</span>')
+        } else {
+          return true
+        }
+      }
     }
   }
-  return false
+  if (replace) {
+    return doc.body.innerHTML
+  } else {
+    return false
+  }
+}
+
+function test(text, search) {
+  return find(text, search, false)
 }
 function replace(text, search) {
-  const testPat = RegExp(escapeRegex(search), 'i')
-  const replacePat = RegExp(escapeRegex(search), 'gi')
-  const doc = domParser.parseFromString(text, 'text/html')
-  for (let node of doc.body.childNodes) {
-    if (testPat.test(node.textContent)) {
-      node.innerHTML = node.textContent.replace(replacePat, '<span class="bg-warning">$&</span>')
-    }
-  }
-  return doc.body.innerHTML
+  return find(text, search, true)
 }
 
 const LETTERS_PER_PAGE = 5

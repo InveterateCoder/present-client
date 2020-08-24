@@ -13,8 +13,8 @@ export function Letter(props) {
 
   return <div className='letter p-3' id={props._id}>
     <div className='letter-content p-3 text-dark bg-light'>
-      <div>
-        <div className='name h4' style={{ userSelect: 'none' }}>{props.name}</div>
+      <div className="mb-2">
+        <div className='text-primary h4' style={{ userSelect: 'none', textDecoration: 'underline' }}>{props.name}</div>
         <div className='ml-auto'>
           <span className='date ml-3' style={{ userSelect: 'none' }}>{props.date}</span>
           <button className='btn btn-light btn-sm ml-2' onClick={checkAndShow}>
