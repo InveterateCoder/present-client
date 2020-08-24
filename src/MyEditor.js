@@ -69,9 +69,7 @@ export const MyEditor = connect(null, mapDispatchToProps)(
       } else {
         props.createLetter(letter)
       }
-      if (props._id)
-        props.closeShow()
-      else hide()
+      hide()
     }
     const hide = () => {
       setName(props.name || 'Setareh')

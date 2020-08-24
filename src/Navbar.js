@@ -148,6 +148,19 @@ export class Navbar extends Component {
         this.mmRef.current.focus()
     }
   }
+  onDateInputKeyDown = ({ which, target: { name } }) => {
+    if(which === 8) {
+      if (name === 'mm') {
+        if (this.state.mm.length === 0) {
+          this.yyyyRef.current.focus()
+        }
+      } else {
+        if(this.state.dd.length === 0) {
+          this.mmRef.current.focus()
+        }
+      }
+    }
+  }
   closeShow = () => {
     this.setState({ show: false })
   }
@@ -197,6 +210,7 @@ export class Navbar extends Component {
                 size="2"
                 onFocus={this.onDateInputFocus}
                 onChange={this.onDateInputChange}
+                onKeyDown={this.onDateInputKeyDown}
                 value={this.state.mm}
               />
               <input
@@ -207,6 +221,7 @@ export class Navbar extends Component {
                 size="2"
                 onFocus={this.onDateInputFocus}
                 onChange={this.onDateInputChange}
+                onKeyDown={this.onDateInputKeyDown}
                 value={this.state.dd}
               />
             </div>
