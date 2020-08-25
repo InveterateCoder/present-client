@@ -27,6 +27,11 @@ export class Navbar extends Component {
     this.ddRef = React.createRef()
     this.searchRef = React.createRef()
   }
+  componentDidUpdate() {
+    if (this.state.search !== this.searchRef.current.value) {
+      this.searchRef.current.value = this.state.search
+    }
+  }
   formNewSearch(s, d) {
     let search = s !== null ? s : this.state.search
     let date = d !== null ? d : this.state.date
