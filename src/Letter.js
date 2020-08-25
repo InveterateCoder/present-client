@@ -11,7 +11,7 @@ export function Letter(props) {
     } else props.requireSignIn()
   }
 
-  return <div className='letter p-3' id={props._id}>
+  return <div className='letter py-3 px-1' id={props._id}>
     <div className='letter-content p-3 text-dark bg-light'>
       <div className="mb-2">
         <div className='text-primary h4' style={{ userSelect: 'none', textDecoration: 'underline' }}>{props.name}</div>
