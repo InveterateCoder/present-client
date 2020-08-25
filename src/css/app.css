@@ -25,7 +25,7 @@
   height: 26px !important;
 }
 
-.ql-editor [class|="ql-indent"]:not(.ql-direction-rtl) {
+.ql-editor [class*="ql-indent"]:not(.ql-direction-rtl) {
   padding-left: 0 !important;
   text-indent: 20px;
 }

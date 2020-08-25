@@ -40,7 +40,7 @@
 .text .ql-align-justify {
   text-align: justify;
 }
-.text .ql-indent-1 {
+.text [class*= "ql-indent"] {
   text-indent: 20px;
 }
 .text blockquote {
