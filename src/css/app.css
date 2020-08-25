@@ -7,6 +7,7 @@
   text-align: center;
   margin-bottom: 0 !important;
 }
+
 .jumbotron>div:first-child {
   font-size: 10vw;
   font-weight: 300;
@@ -15,12 +16,20 @@
   color: honeydew;
   user-select: none;
 }
+
 .ql-editor {
   font-size: .9rem;
 }
+
 .ql-snow.ql-toolbar button, .ql-snow .ql-toolbar button {
   height: 26px !important;
 }
+
+.ql-editor [class|="ql-indent"]:not(.ql-direction-rtl) {
+  padding-left: 0 !important;
+  text-indent: 20px;
+}
+
 @keyframes pacman {
   from {
     opacity: 0;
