@@ -58,7 +58,7 @@ export const MyEditor = connect(null, mapDispatchToProps)(
         date = new Date()
       }
       const letter = {
-        name, datetime: date.toISOString(), text: text
+        name, datetime: date.toISOString(), text
       }
       const parser = new DOMParser()
       const doc = parser.parseFromString(letter.text, "text/html")
@@ -72,14 +72,17 @@ export const MyEditor = connect(null, mapDispatchToProps)(
       hide()
     }
     const hide = () => {
+      props.closeShow()
+    }
+    const enter = () => {
       setName(props.name || 'Setareh')
       setDatetime(getLocalTimeFormat(props.datetime || new Date().toISOString()))
       setText(props.text || '')
-      props.closeShow()
     }
-
     return (
-      <Modal size="lg" show={props.show} onHide={hide}>
+      <Modal size="lg" show={props.show}
+        onEnter={enter}
+        onHide={hide}>
         <Modal.Header closeButton>
           <Modal.Title>{props._id ? "Edit Letter" : "New Letter"}</Modal.Title>
         </Modal.Header>

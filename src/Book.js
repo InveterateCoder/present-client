@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { clearState } from './store/storeActions'
 import { Letter } from './Letter'
 import { Paginator } from './Paginator'
 import escapeRegex from 'escape-string-regexp'
@@ -47,9 +48,12 @@ function replace(text, search) {
 
 const LETTERS_PER_PAGE = 5
 
-const mapStateToProps = letters => ({ letters })
+const mapStateToProps = ({ letters, dirty }) => ({ letters, dirty })
+const mapDispatchToProps = {
+  clearState
+}
 
-export const Book = connect(mapStateToProps)(
+export const Book = connect(mapStateToProps, mapDispatchToProps)(
   class extends Component {
     static getDerivedStateFromProps(props, state) {
       const page = Number(props.match.params.page)
@@ -57,41 +61,54 @@ export const Book = connect(mapStateToProps)(
       const urlSearch = new URLSearchParams(props.location.search)
       const search = urlSearch.get('search')
       let date = urlSearch.get('date')
-      if (date) date = new Date(date)
-      let letters = props.letters.filter(l => {
-        const letDate = new Date(l.datetime)
-        if ((!date || letDate > date)
-          && (!search || test(l.text, search))) {
-          return true
-        }
-        return false
-      })
-      if (date) letters = letters.reverse()
+      let letters = null
+      if (date !== state.date || search !== state.search || props.dirty) {
+        const ldate = date ? new Date(date) : null
+        letters = props.letters.filter(l => {
+          const letDate = new Date(l.datetime)
+          if ((!ldate || letDate > ldate)
+            && (!search || test(l.text, search))) {
+            return true
+          }
+          return false
+        })
+        if (ldate) letters = letters.reverse()
+      } else {
+        letters = state.letters === null ? props.letters : state.letters
+      }
       const total = Math.ceil(letters.length / LETTERS_PER_PAGE) || 1
       if (page > total || page < 1)
         return null
-      if (state.page !== page || state.total !== total || state.letters !== letters) {
-        letters = letters.slice((page - 1) * LETTERS_PER_PAGE, page * LETTERS_PER_PAGE)
-        letters.forEach(l => {
-          if (search) {
-            l.altText = replace(l.text, search)
-          } else {
-            delete l.altText
-          }
-        })
-        return {
-          page,
-          total,
-          letters
+      const pageLetters = letters.slice((page - 1) * LETTERS_PER_PAGE, page * LETTERS_PER_PAGE)
+      pageLetters.forEach(l => {
+        if (search) {
+          l.altText = replace(l.text, search)
+        } else {
+          delete l.altText
         }
-      } else return null
+      })
+      return {
+        page,
+        total,
+        letters,
+        pageLetters,
+        date,
+        search
+      }
+    }
+    onComponentDidUpdate() {
+      if (this.props.dirty)
+        this.props.clearState()
     }
     constructor(props) {
       super(props)
       this.state = {
         page: 0,
         total: 0,
-        letters: []
+        letters: null,
+        pageLetters: null,
+        date: null,
+        search: null
       }
     }
     getDate(datetime) {
@@ -111,7 +128,7 @@ export const Book = connect(mapStateToProps)(
       const { page, total } = this.state
       return <React.Fragment>
         <Paginator page={page} total={total} search={search} />
-        {this.state.letters.map(letter => <Letter key={letter._id}
+        {this.state.pageLetters.map(letter => <Letter key={letter._id}
           {...letter} date={this.getDate(letter.datetime)}
           search={search} page={page} requireSignIn={this.requireSignIn} />)}
         <Paginator page={page} total={total} search={search} />

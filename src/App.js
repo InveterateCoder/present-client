@@ -6,7 +6,7 @@ import PacmanSpinner from './PacmanSpinner'
 import './css/app.css'
 import { Selector } from './Selector'
 
-const mapStateToProps = letters => ({ letters })
+const mapStateToProps = state => ({ state })
 const mapDispatchToProps = { loadLetters }
 
 class App extends Component {
@@ -14,7 +14,7 @@ class App extends Component {
     this.props.loadLetters()
   }
   render() {
-    if (!this.props.letters) {
+    if (!this.props.state) {
       return <PacmanSpinner loading={true} />
     }
     return <div className="container">
